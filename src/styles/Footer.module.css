@@ -1,0 +1,27 @@
+.Footer {
+	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
+	padding-top: 36px;
+	gap: 240px;
+	width: 100%;
+	height: 164px;
+}
+
+.Footer div {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 140px;
+}
+
+.Title {
+	font-weight: bold;
+}
+.LlamaText {
+	font-size: 14px;
+}
+.Text {
+	text-decoration: underline;
+	font-size: 14px;
+}

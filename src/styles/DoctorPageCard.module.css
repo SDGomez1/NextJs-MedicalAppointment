@@ -1,0 +1,19 @@
+.DoctorPageCard {
+	background: #ffffff;
+	box-sizing: border-box;
+	padding: 52px 28px;
+	width: 264px;
+	height: 264px;
+	box-shadow: 0px 0px 64px 19px rgba(17, 94, 89, 0.1);
+	border-radius: 24px;
+}
+
+.Title {
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.Text {
+	text-align: center;
+}

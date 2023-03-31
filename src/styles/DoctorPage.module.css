@@ -1,0 +1,40 @@
+.DoctorPage {
+	background-color: var(--ligth-bg);
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	padding: 96px 140px 0px 140px;
+	width: 100%;
+	border-bottom: solid 1px var(--accent);
+}
+
+.DoctorPage h3,
+.DoctorPage > p {
+	font-weight: bold;
+	font-size: 48px;
+	margin-bottom: 40px;
+}
+.DoctorPage > p {
+	width: 760px;
+}
+
+.DoctorPage > div {
+	display: flex;
+	justify-content: center;
+	gap: 116px;
+	margin-top: 80px;
+	margin-bottom: 96px;
+}
+
+.DoctorPage > button {
+	background-color: var(--accent);
+	align-self: center;
+	border: none;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	width: 403px;
+	height: 59px;
+	border-radius: 8px;
+	margin-bottom: 132px;
+}

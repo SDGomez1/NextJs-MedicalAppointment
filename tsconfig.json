@@ -18,7 +18,10 @@
       "@/*": ["./src/*"],
       "@routers/*": ["./src/server/api/routers/*"],
       "@trpcApi/*": ["./src/server/api/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@img/*": ["./src/assets/img/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

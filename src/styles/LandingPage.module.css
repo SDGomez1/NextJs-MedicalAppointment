@@ -1,0 +1,41 @@
+.LandingPage {
+	display: flex;
+	box-sizing: border-box;
+	justify-content: center;
+	align-items: center;
+	padding: 100px 100px 0px 100px;
+	height: 100%;
+	gap: 80px;
+}
+
+.TextContainer {
+	display: flex;
+	flex-direction: column;
+	width: 700px;
+	gap: 44px;
+}
+
+.TextContainer h2 {
+	color: var(--accent);
+	font-size: 48px;
+}
+.TextContainer div {
+	display: flex;
+	gap: 72px;
+}
+
+.Register,
+.Book {
+	background-color: var(--ligth-bg);
+	font-weight: bold;
+	border: none;
+	border-radius: 8px;
+	width: 223px;
+	height: 59px;
+	font-size: 20px;
+}
+
+.Book {
+	background-color: var(--accent);
+	color: white;
+}

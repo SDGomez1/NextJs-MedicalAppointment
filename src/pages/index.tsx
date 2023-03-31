@@ -1,13 +1,14 @@
-import { trpc } from "@utils/trpc";
-
+import { DoctorPage } from "@/components/DoctorPage";
+import { LandingPage } from "@/components/LandingPage";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@components/Navbar";
 export default function IndexPage() {
-	const hello = trpc.hello.useQuery({ text: "client" });
-	if (!hello.data) {
-		return <div>Loading...</div>;
-	}
 	return (
-		<div>
-			<p>{hello.data.greeting}</p>
-		</div>
+		<>
+			<Navbar />
+			<LandingPage />
+			<DoctorPage />
+			<Footer />
+		</>
 	);
 }
