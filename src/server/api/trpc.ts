@@ -1,21 +1,47 @@
-import { initTRPC } from '@trpc/server';
-import { CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { CreateContextOptions } from "vm";
-import { prisma } from "@trpcApi/db";
-import { getServerSession } from 'next-auth';
-const createInnerTRPCContext = (_opts: CreateContextOptions) => {
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { Session } from "next-auth";
 
-    return {
-        prisma,
-        getServerSession
-    }
-}
+import { getServerAuthSession } from "@/server/auth";
+import { prisma } from "@/server/db";
 
-export const createTRPCContext = async (_opts: CreateNextContextOptions) => {
-    return createInnerTRPCContext({});
-}
+import { initTRPC, TRPCError } from "@trpc/server";
 
-const t = initTRPC.context<typeof createTRPCContext>().create()
+type CreateContextOptions = {
+	session: Session | null;
+};
+
+const createInnerTRPCContext = (opts: CreateContextOptions) => {
+	return {
+		session: opts.session,
+		prisma,
+	};
+};
+
+export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+	const { req, res } = opts;
+
+	const session = await getServerAuthSession({ req, res });
+
+	return createInnerTRPCContext({
+		session,
+	});
+};
+
+const t = initTRPC.context<typeof createInnerTRPCContext>().create({});
 
 export const router = t.router;
-export const procedure = t.procedure;
+
+export const publicProcedure = t.procedure;
+
+const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+	if (!ctx.session || !ctx.session.user) {
+		throw new TRPCError({ code: "UNAUTHORIZED" });
+	}
+	return next({
+		ctx: {
+			session: { ...ctx.session, user: ctx.session.user },
+		},
+	});
+});
+
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);

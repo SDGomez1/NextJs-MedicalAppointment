@@ -1,0 +1,8 @@
+.MainContainer {
+	height: 100vh;
+}
+
+.Container {
+	display: flex;
+	height: calc(100% - 136px);
+}

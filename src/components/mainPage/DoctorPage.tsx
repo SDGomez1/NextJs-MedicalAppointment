@@ -1,4 +1,4 @@
-import styles from "@styles/DoctorPage.module.css";
+import styles from "@styles/mainPage/DoctorPage.module.css";
 import { DoctorPageCard } from "./DoctorPageCard";
 import { signIn } from "next-auth/react";
 const DoctorPage = () => {

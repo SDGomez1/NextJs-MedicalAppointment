@@ -1,0 +1,33 @@
+.SideBar {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 0px 30px;
+	padding-top: 20px;
+	height: 100%;
+	width: 320px;
+	gap: 56px;
+}
+.SideBar button {
+	background-color: var(--accent);
+	flex-shrink: 0;
+	border: none;
+	color: white;
+	font-weight: bold;
+	height: 58px;
+	border-radius: 12px;
+}
+.SideBar ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.SideBar p {
+	display: flex;
+	align-items: end;
+	box-sizing: border-box;
+	padding-bottom: 40px;
+	height: 100%;
+}

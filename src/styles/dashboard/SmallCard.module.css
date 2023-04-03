@@ -1,0 +1,16 @@
+.SmallCard {
+	display: flex;
+	flex-direction: column;
+	background: white;
+	box-sizing: border-box;
+	justify-content: center;
+	gap: 20px;
+	padding: 32px;
+	border-radius: 12px;
+	width: 320px;
+	height: 160px;
+}
+
+.SmallCard h4 {
+	font-size: 20px;
+}

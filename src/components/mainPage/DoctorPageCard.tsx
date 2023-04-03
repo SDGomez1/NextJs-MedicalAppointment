@@ -1,4 +1,4 @@
-import styles from "@styles/DoctorPageCard.module.css";
+import styles from "@styles/mainPage/DoctorPageCard.module.css";
 
 const DoctorPageCard = (props: { title: string; text: string }) => {
 	return (

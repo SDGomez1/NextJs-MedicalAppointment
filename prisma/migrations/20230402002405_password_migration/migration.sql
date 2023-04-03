@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `IsDoctor` BOOLEAN NULL,
+    ADD COLUMN `Password` VARCHAR(191) NULL;

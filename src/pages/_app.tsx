@@ -7,7 +7,7 @@ const raleway = Raleway({ subsets: ["latin"] });
 const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
 	return (
 		<SessionProvider session={pageProps.session}>
-			<main className={raleway.className}>
+			<main className={raleway.className + " MainContainer"}>
 				<Component {...pageProps} />
 			</main>
 		</SessionProvider>

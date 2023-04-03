@@ -46,6 +46,8 @@ model User {
   dateOfBirth   DateTime?
   Appointment   Appointment[]
   Exams         Exams[]
+  IsDoctor      Boolean?
+  Password      String?
 }
 
 model VerificationToken {

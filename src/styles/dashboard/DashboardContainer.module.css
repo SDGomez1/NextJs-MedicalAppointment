@@ -1,0 +1,16 @@
+.Information {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 60px;
+	height: 100%;
+	width: 100%;
+	background-color: var(--ligth-bg);
+	gap: 60px;
+}
+
+.SmallCardContainer {
+	display: flex;
+	gap: 84px;
+}
