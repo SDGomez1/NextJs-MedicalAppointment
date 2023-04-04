@@ -7,19 +7,17 @@ export type smallcardContent = {
 	content: string | null;
 };
 
-const DashboardContainer = (props: {
-	children: smallcardContent[];
-	title: string;
-}) => {
+const DashboardContainer = (props: { text: smallcardContent[] }) => {
 	return (
 		<div className={styles.Information}>
 			<div className={styles.SmallCardContainer}>
 				<SmallCard>
-					<h4>Proxima Cita general disponbile</h4>
-					<p>30/03/2023 - 10:00 AM Sede hospital del sur</p>
+					<h4>{props.text[0].title}</h4>
+					{props.text[0].content ? <p>{props.text[0].content}</p> : <></>}
 				</SmallCard>
 				<SmallCard>
-					<h4>Ultimos resultados de laboratorio</h4>
+					<h4>{props.text[1].title}</h4>
+					{props.text[1].content ? <p>{props.text[1].content}</p> : <></>}
 				</SmallCard>
 			</div>
 			<MainInfoPanel title='Proxima cita agendada' />

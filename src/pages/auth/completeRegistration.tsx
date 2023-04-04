@@ -19,29 +19,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			if (!dbUser.IsDoctor) {
 				return {
 					redirect: {
-						destination: "/patientDashboard",
+						destination: "/dashboard/patient",
 						permanent: true,
 					},
 				};
 			}
 			return {
 				redirect: {
-					destination: "/doctorDashboard",
+					destination: "/dashboard/doctor",
 					permanent: true,
 				},
 			};
 		}
 	}
 	return {
-		props: {},
+		redirect: {
+			destination: "/",
+			permanent: true,
+		},
 	};
 };
 
 const completeRegistration = () => {
 	const router = useRouter();
-	const updateRole = trpc.user.addRole.useMutation();
-	const updatePhoneNumber = trpc.user.addPhoneNumber.useMutation();
-	const updateDOB = trpc.user.addDateOfBirth.useMutation();
+	const updateRole = trpc.user.updateRole.useMutation();
+	const updatePhoneNumber = trpc.user.updatePhoneNumber.useMutation();
+	const updateDOB = trpc.user.updateDateOfBirth.useMutation();
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

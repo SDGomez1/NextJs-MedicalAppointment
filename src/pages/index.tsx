@@ -17,14 +17,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		if (dbUser?.phoneNumber == null) {
 			return {
 				redirect: {
-					destination: "/completeRegistration",
+					destination: "/auth/completeRegistration",
+					permanent: true,
+				},
+			};
+		}
+		if (!dbUser.IsDoctor) {
+			return {
+				redirect: {
+					destination: "/dashboard/patient",
 					permanent: true,
 				},
 			};
 		}
 		return {
 			redirect: {
-				destination: "/patientDashboard",
+				destination: "/dashboard/doctor",
 				permanent: true,
 			},
 		};

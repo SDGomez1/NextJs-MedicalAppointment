@@ -28,6 +28,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "prisma": "^4.12.0"
   }
 }

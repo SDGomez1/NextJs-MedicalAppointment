@@ -10,7 +10,7 @@ const Navbar = () => {
 			</Link>
 
 			<div>
-				<Link href=''>Registrate</Link>
+				<Link href='/auth/register'>Registrate</Link>
 				<button onClick={() => signIn()}>Accede</button>
 			</div>
 		</nav>

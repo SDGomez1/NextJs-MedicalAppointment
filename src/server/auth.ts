@@ -8,6 +8,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/server/db";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
 declare module "next-auth" {
 	interface Session extends DefaultSession {
@@ -31,11 +32,14 @@ export const authOptions: NextAuthOptions = {
 	},
 	secret: process.env.NEXTAUTH_SECRET,
 	adapter: PrismaAdapter(prisma),
+	pages: {
+		signIn: "/auth/login",
+	},
 	providers: [
-		GoogleProvider({
+		/* GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID!,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-		}),
+		}), */
 		CredentialsProvider({
 			name: "",
 			credentials: {
@@ -52,8 +56,14 @@ export const authOptions: NextAuthOptions = {
 						email: credentials?.username,
 					},
 				});
-				if (user && user.Password == credentials?.password) {
-					return user;
+				if (user && credentials?.password && user.Password) {
+					const isCorrect = bcrypt.compareSync(
+						credentials.password,
+						user.Password
+					);
+					if (isCorrect) {
+						return user;
+					}
 				}
 				return null;
 			},
