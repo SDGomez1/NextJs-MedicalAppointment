@@ -21,7 +21,7 @@ export const userRouter = router({
 					email: input.email,
 					IsDoctor: input.isDoctor,
 					phoneNumber: input.phoneNumber,
-					dateOfBirth: input.DOB,
+					dateOfBirth: new Date(input.DOB),
 					Password: password,
 				},
 			});

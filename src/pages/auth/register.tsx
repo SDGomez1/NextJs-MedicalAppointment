@@ -18,15 +18,17 @@ const register = () => {
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
-		createUser.mutate({
-			name: nombre,
-			email: Correo,
-			password: password,
-			isDoctor: rol == "true" ? true : false,
-			phoneNumber: Number(phNumber),
-			DOB: dob,
-		});
+		if (dob) {
+			createUser.mutate({
+				name: nombre,
+				email: Correo,
+				password: password,
+				isDoctor: rol == "true" ? true : false,
+				phoneNumber: Number(phNumber),
+				DOB: dob,
+			});
+		}
+		router.push("/");
 	};
 	return (
 		<div className={styles.Main}>
