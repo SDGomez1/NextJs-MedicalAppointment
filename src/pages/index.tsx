@@ -2,9 +2,12 @@ import { DoctorPage } from "@components/mainPage/DoctorPage";
 import { LandingPage } from "@components/mainPage/LandingPage";
 import { Footer } from "@components/mainPage/Footer";
 import { Navbar } from "@components/mainPage/Navbar";
+
 import type { GetServerSideProps } from "next";
 import { getServerAuthSession } from "@/server/auth";
+
 import { prisma } from "@/server/db";
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const ctx = { req: context.req, res: context.res };
 	const session = await getServerAuthSession(ctx);
