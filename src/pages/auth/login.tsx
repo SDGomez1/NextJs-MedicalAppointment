@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "@styles/login.module.css";
-import { FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 
 import type { GetServerSideProps } from "next";
@@ -24,10 +24,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 const login = () => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const email = event.target.Correo.value;
-		const password = event.target.password.value;
 
 		await signIn("credentials", {
 			redirect: true,
@@ -44,11 +45,19 @@ const login = () => {
 			</Link>
 			<form onSubmit={handleSubmit}>
 				<label>Correo</label>
-				<input name='Correo' />
+				<input
+					name='Correo'
+					onChange={(e) => {
+						setEmail(e.target.value);
+					}}
+				/>
 				<label>Contraseña</label>
 				<input
 					name='password'
 					type='password'
+					onChange={(e) => {
+						setPassword(e.target.value);
+					}}
 				/>
 				<button type='submit'>Iniciar sesión</button>
 			</form>

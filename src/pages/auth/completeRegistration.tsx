@@ -1,6 +1,6 @@
 import styles from "@styles/completeRegistration.module.css";
 import { trpc } from "@/utils/trpc";
-import type { FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next";
 import { getServerAuthSession } from "@/server/auth";
@@ -41,16 +41,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const completeRegistration = () => {
+	const [rolData, setRolData] = useState("");
+	const [phNumberData, setPhNumberData] = useState("");
+	const [dobData, setDobData] = useState("");
+
 	const router = useRouter();
+
 	const updateRole = trpc.user.updateRole.useMutation();
+
 	const updatePhoneNumber = trpc.user.updatePhoneNumber.useMutation();
+
 	const updateDOB = trpc.user.updateDateOfBirth.useMutation();
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const rolData: string = event.target.rol.value;
-		const phNumberData: string = event.target.phNumber.value;
-		const dobData: string = event.target.dob.valueAsDate;
 
 		updateRole.mutate({
 			data: rolData,
@@ -96,7 +100,12 @@ const completeRegistration = () => {
 				<p>Termina de configurar tu cuenta</p>
 				<form onSubmit={handleSubmit}>
 					<label>Rol</label>
-					<select name='rol'>
+					<select
+						name='rol'
+						onChange={(e) => {
+							setRolData(e.target.value);
+						}}
+					>
 						<option value='false'> Paciente</option>
 						<option value='true'>Doctor</option>
 					</select>
@@ -104,13 +113,16 @@ const completeRegistration = () => {
 					<input
 						type='text'
 						name='phNumber'
+						onChange={(e) => {
+							setPhNumberData(e.target.value);
+						}}
 					></input>
 					<label>Fecha de nacimiento</label>
 					<input
 						type='date'
 						name='dob'
 						onChange={(e) => {
-							e.target.valueAsDate;
+							setDobData(e.target.value);
 						}}
 					/>
 					<button type='submit'>Crear cuenta</button>

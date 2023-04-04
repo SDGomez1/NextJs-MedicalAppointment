@@ -1,7 +1,7 @@
 import { trpc } from "@/utils/trpc";
 import styles from "@styles/register.module.css";
 import Link from "next/link";
-import type { FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 
 const register = () => {
@@ -9,15 +9,15 @@ const register = () => {
 
 	const router = useRouter();
 
+	const [nombre, setNombre] = useState("");
+	const [Correo, setCorreo] = useState("");
+	const [password, setPassword] = useState("");
+	const [rol, setRol] = useState("");
+	const [phNumber, setPhNumber] = useState("");
+	const [dob, setDob] = useState("");
+
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
-		const nombre: string = event.target.NombreCompleto.value;
-		const Correo: string = event.target.Correo.value;
-		const password: string = event.target.password.value;
-		const rol: string = event.target.rol.value;
-		const phNumber: string = event.target.phNumber.value;
-		const nombdobre: string = event.target.dob.valueAsDate;
 
 		createUser.mutate({
 			name: nombre,
@@ -25,7 +25,7 @@ const register = () => {
 			password: password,
 			isDoctor: rol == "true" ? true : false,
 			phoneNumber: Number(phNumber),
-			DOB: nombdobre,
+			DOB: dob,
 		});
 	};
 	return (
@@ -35,13 +35,26 @@ const register = () => {
 			</Link>
 			<form onSubmit={handleSubmit}>
 				<label>Nombre Completo</label>
-				<input name='NombreCompleto' />
+				<input
+					name='NombreCompleto'
+					onChange={(e) => {
+						setNombre(e.target.value);
+					}}
+				/>
 				<label>Correo</label>
-				<input name='Correo' />
+				<input
+					name='Correo'
+					onChange={(e) => {
+						setCorreo(e.target.value);
+					}}
+				/>
 				<label>Contraseña</label>
 				<input
 					name='password'
 					type='password'
+					onChange={(e) => {
+						setPassword(e.target.value);
+					}}
 				/>
 				<label>Verificar Contraseña</label>
 				<input
@@ -49,16 +62,29 @@ const register = () => {
 					type='password'
 				/>
 				<label>Rol</label>
-				<select name='rol'>
+				<select
+					name='rol'
+					onChange={(e) => {
+						setRol(e.target.value);
+					}}
+				>
 					<option value='false'> Paciente</option>
 					<option value='true'>Doctor</option>
 				</select>
 				<label>Numero de teléfono</label>
-				<input name='phNumber' />
+				<input
+					name='phNumber'
+					onChange={(e) => {
+						setPhNumber(e.target.value);
+					}}
+				/>
 				<label>Fecha de nacimiento</label>
 				<input
 					type='date'
 					name='dob'
+					onChange={(e) => {
+						setDob(e.target.value);
+					}}
 				/>
 
 				<button type='submit'>Registrate</button>
