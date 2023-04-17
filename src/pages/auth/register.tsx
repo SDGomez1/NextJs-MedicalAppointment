@@ -58,10 +58,11 @@ const register = () => {
 				});
 				if (createUser.isSuccess) {
 					setregistered(true);
+				} else {
+					if (createUser.error?.data?.code == "BAD_REQUEST")
+						alert(createUser.error?.message);
+					alert("Error al conectarse");
 				}
-				if (createUser.error?.data?.code == "BAD_REQUEST")
-					alert(createUser.error?.message);
-				else alert("Error al conectarse");
 			}
 		} else {
 			if (errorRef.current) {
