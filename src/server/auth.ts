@@ -1,13 +1,17 @@
-import type { GetServerSidePropsContext } from "next";
 import {
 	getServerSession,
 	type NextAuthOptions,
 	type DefaultSession,
 } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "@/server/db";
+
+import type { GetServerSidePropsContext } from "next";
+
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/server/db";
+
 import bcrypt from "bcrypt";
 
 declare module "next-auth" {
@@ -56,10 +60,10 @@ export const authOptions: NextAuthOptions = {
 						email: credentials?.username,
 					},
 				});
-				if (user && credentials?.password && user.Password) {
+				if (user && credentials?.password && user.password) {
 					const isCorrect = bcrypt.compareSync(
 						credentials.password,
-						user.Password
+						user.password
 					);
 					if (isCorrect) {
 						return user;

@@ -1,6 +1,11 @@
-import { z } from "zod";
 import { router, publicProcedure, protectedProcedure } from "@trpcApi/trpc";
+
+import { z } from "zod";
+
 import bcrypt from "bcrypt";
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+
 export const userRouter = router({
 	create: publicProcedure
 		.input(
@@ -14,17 +19,28 @@ export const userRouter = router({
 			})
 		)
 		.mutation(async ({ ctx, input }) => {
-			const password = await bcrypt.hash(input.password, 10);
-			return await ctx.prisma.user.create({
-				data: {
-					name: input.name,
-					email: input.email,
-					IsDoctor: input.isDoctor,
-					phoneNumber: input.phoneNumber,
-					dateOfBirth: new Date(input.DOB),
-					Password: password,
-				},
-			});
+			try {
+				const password = await bcrypt.hash(input.password, 10);
+				return await ctx.prisma.user.create({
+					data: {
+						name: input.name,
+						email: input.email,
+						isDoctor: input.isDoctor,
+						phoneNumber: input.phoneNumber,
+						dateOfBirth: new Date(input.DOB),
+						password: password,
+					},
+				});
+			} catch (e) {
+				if (e instanceof Prisma.PrismaClientKnownRequestError) {
+					if (e.code === "P2002") {
+						throw new TRPCError({
+							code: "BAD_REQUEST",
+						});
+					}
+				}
+				throw e;
+			}
 		}),
 
 	updateRole: protectedProcedure
@@ -41,7 +57,7 @@ export const userRouter = router({
 						email: sessionEmail,
 					},
 					data: {
-						IsDoctor: input.data == "true" ? true : false,
+						isDoctor: input.data == "true" ? true : false,
 					},
 				});
 			}

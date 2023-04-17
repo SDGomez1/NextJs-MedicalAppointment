@@ -1,10 +1,13 @@
-import styles from "@styles/completeRegistration.module.css";
-import { trpc } from "@/utils/trpc";
+import type { GetServerSideProps } from "next";
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/router";
-import type { GetServerSideProps } from "next";
+
 import { getServerAuthSession } from "@/server/auth";
+import { trpc } from "@/utils/trpc";
+
 import { prisma } from "@/server/db";
+
+import styles from "@styles/auth/completeRegistration.module.css";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const ctx = { req: context.req, res: context.res };
@@ -16,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			},
 		});
 		if (dbUser?.phoneNumber != null) {
-			if (!dbUser.IsDoctor) {
+			if (!dbUser.isDoctor) {
 				return {
 					redirect: {
 						destination: "/dashboard/patient",
@@ -40,18 +43,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
-const completeRegistration = () => {
+const completeRegistration = (): JSX.Element => {
 	const [rolData, setRolData] = useState("");
 	const [phNumberData, setPhNumberData] = useState("");
 	const [dobData, setDobData] = useState("");
 
-	const router = useRouter();
-
 	const updateRole = trpc.user.updateRole.useMutation();
-
 	const updatePhoneNumber = trpc.user.updatePhoneNumber.useMutation();
-
 	const updateDOB = trpc.user.updateDateOfBirth.useMutation();
+
+	const router = useRouter();
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -116,6 +117,9 @@ const completeRegistration = () => {
 						onChange={(e) => {
 							setPhNumberData(e.target.value);
 						}}
+						required
+						minLength={8}
+						maxLength={10}
 					></input>
 					<label>Fecha de nacimiento</label>
 					<input
@@ -124,6 +128,7 @@ const completeRegistration = () => {
 						onChange={(e) => {
 							setDobData(e.target.value);
 						}}
+						required
 					/>
 					<button type='submit'>Crear cuenta</button>
 				</form>

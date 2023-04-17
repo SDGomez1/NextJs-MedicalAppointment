@@ -1,5 +1,6 @@
 import { MainInfoPanel } from "@/components/dashboard/MainInfoPanel";
 import { SmallCard } from "@/components/dashboard/SmallCard";
+
 import styles from "@styles/dashboard/DashboardContainer.module.css";
 
 export type smallcardContent = {

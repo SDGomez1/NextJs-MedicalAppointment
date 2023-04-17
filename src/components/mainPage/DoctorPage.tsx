@@ -1,6 +1,8 @@
-import styles from "@styles/mainPage/DoctorPage.module.css";
 import { DoctorPageCard } from "./DoctorPageCard";
 import { signIn } from "next-auth/react";
+
+import styles from "@styles/mainPage/DoctorPage.module.css";
+
 const DoctorPage = () => {
 	return (
 		<section className={styles.DoctorPage}>

@@ -1,6 +1,7 @@
-import Link from "next/link";
-import styles from "@styles/mainPage/Navbar.module.css";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+
+import styles from "@styles/mainPage/Navbar.module.css";
 
 const Navbar = () => {
 	return (

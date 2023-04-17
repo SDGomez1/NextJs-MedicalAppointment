@@ -1,7 +1,9 @@
-import landingAsset from "@img/landingAsset.svg";
-import Image from "next/image";
-import styles from "@styles/mainPage/LandingPage.module.css";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
+
+import landingAsset from "@img/landingAsset.svg";
+
+import styles from "@styles/mainPage/LandingPage.module.css";
 
 const LandingPage = () => {
 	return (

@@ -49,3 +49,45 @@
 	border-radius: 12px;
 	margin-top: 88px;
 }
+
+.error {
+	color: red;
+	font-weight: bold;
+	display: none;
+}
+.ContainerRegistered {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 400px;
+	height: 100vh;
+	width: 100%;
+}
+.ContainerRegistered h2 {
+	font-weight: bold;
+	font-size: 48px;
+}
+
+.ContainerRegistered button {
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	border: none;
+	background-color: var(--accent);
+	font-size: 20px;
+	width: 450px;
+	height: 68px;
+	border-radius: 12px;
+	margin-top: 88px;
+	flex-shrink: 0;
+}
+.GetLogIn {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.Main p > a {
+	text-decoration: underline;
+}

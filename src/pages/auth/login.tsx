@@ -1,18 +1,24 @@
-import Link from "next/link";
-import styles from "@styles/login.module.css";
+import {
+	type GetServerSideProps,
+	type InferGetServerSidePropsType,
+} from "next";
 import { type FormEvent, useState } from "react";
-import { signIn } from "next-auth/react";
+import Link from "next/link";
 
-import type { GetServerSideProps } from "next";
+import { signIn } from "next-auth/react";
 import { getServerAuthSession } from "@/server/auth";
+
+import styles from "@styles/auth/login.module.css";
+import { TypeOf } from "zod";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const ctx = { req: context.req, res: context.res };
+	const query = { query: context.query };
 	const session = await getServerAuthSession(ctx);
 
 	if (!session) {
 		return {
-			props: {},
+			props: { queryParams: query },
 		};
 	}
 
@@ -23,13 +29,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		},
 	};
 };
-const login = () => {
+
+const login = ({
+	queryParams,
+}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element => {
+	console.log(queryParams);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
 		await signIn("credentials", {
 			redirect: true,
 			username: email,
@@ -50,6 +58,7 @@ const login = () => {
 					onChange={(e) => {
 						setEmail(e.target.value);
 					}}
+					required
 				/>
 				<label>Contraseña</label>
 				<input
@@ -58,8 +67,16 @@ const login = () => {
 					onChange={(e) => {
 						setPassword(e.target.value);
 					}}
+					required
 				/>
+				<p className={styles.ErrorMessage}>
+					{queryParams.query.error ? "Correo o contraseña invalidos" : ""}{" "}
+				</p>
 				<button type='submit'>Iniciar sesión</button>
+				<p>
+					No Tienes una cuenta?{" "}
+					<Link href={"/auth/register"}>Crea una Aquí</Link>
+				</p>
 			</form>
 		</div>
 	);

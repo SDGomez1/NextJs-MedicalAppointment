@@ -7,6 +7,10 @@
 	min-height: 100vh;
 	width: 100%;
 }
+.Main p {
+	text-align: center;
+	margin-top: 10px;
+}
 .Main h1 {
 	font-weight: bold;
 	color: var(--accent);
@@ -47,4 +51,11 @@
 	height: 68px;
 	border-radius: 12px;
 	margin-top: 88px;
+}
+
+.ErrorMessage {
+	color: red;
+}
+.Main p > a {
+	text-decoration: underline;
 }

@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 				},
 			};
 		}
-		if (!dbUser.IsDoctor) {
+		if (!dbUser.isDoctor) {
 			return {
 				redirect: {
 					destination: "/dashboard/patient",
@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		props: {},
 	};
 };
-export default function IndexPage() {
+export default function IndexPage(): JSX.Element {
 	return (
 		<>
 			<Navbar />

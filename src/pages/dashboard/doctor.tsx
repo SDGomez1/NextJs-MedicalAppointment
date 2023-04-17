@@ -4,19 +4,45 @@ import type { smallcardContent } from "@/containers/dashboard/DashboardContainer
 import { Sidebar } from "@components/dashboard/SideBar";
 import { TopBar } from "@components/dashboard/TopBar";
 
-import styles from "@styles/patientDashboard.module.css";
-
 import type { GetServerSideProps } from "next";
 import { getServerAuthSession } from "@/server/auth";
+
+import { prisma } from "@/server/db";
+
+import styles from "@styles/patientDashboard.module.css";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const ctx = { req: context.req, res: context.res };
 	const session = await getServerAuthSession(ctx);
 
 	if (session) {
-		return {
-			props: {},
-		};
+		if (session.user.email) {
+			const user = await prisma.user.findUnique({
+				where: {
+					email: session.user.email,
+				},
+			});
+			if (user?.isDoctor == true) {
+				if (user.firstLogin == true) {
+					return {
+						redirect: {
+							destination: "/setUp/doctor",
+							permanent: true,
+						},
+					};
+				}
+
+				return {
+					props: {},
+				};
+			}
+			return {
+				redirect: {
+					destination: "/dashboard/patient",
+					permanent: true,
+				},
+			};
+		}
 	}
 
 	return {
@@ -27,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
-const doctorDashboard = () => {
+const doctorDashboard = (): JSX.Element => {
 	const listItems: string[] = [
 		"Panel principal",
 		"Próximas citas",
