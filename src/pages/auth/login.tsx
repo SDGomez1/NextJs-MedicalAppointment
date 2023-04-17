@@ -33,17 +33,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const login = ({
 	queryParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element => {
-	console.log(queryParams);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		await signIn("credentials", {
-			redirect: true,
-			username: email,
-			password: password,
-			callbackUrl: "/",
-		});
+		try {
+			await signIn("credentials", {
+				redirect: true,
+				username: email,
+				password: password,
+				callbackUrl: "/",
+			});
+		} catch (e) {
+			alert("Ha ocurrido un error");
+		}
 	};
 
 	return (

@@ -36,6 +36,7 @@ export const userRouter = router({
 					if (e.code === "P2002") {
 						throw new TRPCError({
 							code: "BAD_REQUEST",
+							message: "El usuario Ya existe",
 						});
 					}
 				}

@@ -59,7 +59,9 @@ const register = () => {
 				if (createUser.isSuccess) {
 					setregistered(true);
 				}
-				alert("El usuario ya existe");
+				if (createUser.error?.data?.code == "BAD_REQUEST")
+					alert(createUser.error?.message);
+				else alert("Error al conectarse");
 			}
 		} else {
 			if (errorRef.current) {
