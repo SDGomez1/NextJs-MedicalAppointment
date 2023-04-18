@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
-const register = () => {
+const register = (): JSX.Element => {
 	const errorRef = useRef<HTMLParagraphElement>(null);
 
 	const [registered, setregistered] = useState(false);
@@ -44,24 +44,24 @@ const register = () => {
 
 	const createUser = trpc.user.create.useMutation();
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (verfPassword === password) {
 			if (dob) {
-				createUser.mutate({
-					name: nombre,
-					email: Correo,
-					password: password,
-					isDoctor: rol == "true" ? true : false,
-					phoneNumber: Number(phNumber),
-					DOB: dob,
-				});
-				if (createUser.isSuccess) {
+				try {
+					await createUser.mutateAsync({
+						name: nombre,
+						email: Correo,
+						password: password,
+						isDoctor: rol == "true" ? true : false,
+						phoneNumber: Number(phNumber),
+						DOB: dob,
+					});
 					setregistered(true);
-				} else {
-					if (createUser.error?.data?.code == "BAD_REQUEST")
-						alert(createUser.error?.message);
-					alert("Error al conectarse");
+				} catch (e: any) {
+					console.log(e);
+
+					alert(e.message);
 				}
 			}
 		} else {
@@ -86,7 +86,6 @@ const register = () => {
 						onChange={(e) => {
 							let name = useNameTextParse(e.target.value);
 							setNombre(name);
-							console.log(name);
 						}}
 						required
 					/>
@@ -120,7 +119,9 @@ const register = () => {
 						name='passwordVerfication'
 						type='password'
 						required
-						onChange={(e) => setVerfPassword(e.target.value)}
+						onChange={(e) => {
+							setVerfPassword(e.target.value);
+						}}
 					/>
 					<label>Rol</label>
 					<select
