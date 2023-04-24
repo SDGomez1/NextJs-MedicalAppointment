@@ -17,11 +17,25 @@
 	gap: 20px;
 }
 .Container div {
-	background: #d9d9d9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: bold;
+	background: var(--accent);
 	width: 48px;
 	height: 48px;
 	border-radius: 100%;
 }
 .Container p {
 	font-weight: bold;
+}
+.TopBar button {
+	font-weight: bold;
+	background-color: white;
+	color: var(--accent);
+	width: 150px;
+	height: 40px;
+	border: 2px solid var(--accent);
+	border-radius: 8px;
 }

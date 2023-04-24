@@ -1,0 +1,15 @@
+.DayCheckBox {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+	width: 32px;
+	border: 1px solid var(--text);
+	color: var(--text);
+}
+
+.checked {
+	color: var(--accent);
+	border-color: var(--accent);
+}

@@ -65,12 +65,14 @@
 	width: 80px;
 	margin-right: 350px;
 }
-.MainContainer Form input {
+.MainContainer Form input,
+.MainContainer Form select {
 	width: 406px;
 	height: 46px;
 	border: 1px solid #115e59;
 	border-radius: 10px;
 	justify-self: center;
+	padding-left: 10px;
 }
 .MainContainer Form button {
 	color: white;
@@ -87,4 +89,9 @@
 .Selected {
 	color: var(--text) !important;
 	border-color: var(--text) !important;
+}
+
+.CheckboxContainer {
+	display: flex;
+	gap: 4px;
 }

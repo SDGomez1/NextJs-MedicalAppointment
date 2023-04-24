@@ -1,9 +1,75 @@
 import { TopBar } from "@/components/dashboard/TopBar";
+import { DayCheckBox } from "@/components/setUp/DayCheckBox";
+
+import { useEffect, useState } from "react";
+
+import { getServerAuthSession } from "@/server/auth";
+import { GetServerSideProps } from "next";
+
 import styles from "@/styles/setUp/Doctor.module.css";
-import { useState } from "react";
+import { trpc } from "@/utils/trpc";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const ctx = { req: context.req, res: context.res };
+	const session = await getServerAuthSession(ctx);
+
+	if (session) {
+		return {
+			props: {},
+		};
+	}
+	return {
+		redirect: {
+			destination: "/",
+			permanent: true,
+		},
+	};
+};
 
 const doctorSetUp = () => {
+	const officesCities = trpc.office.getAllCities.useQuery().data;
+
 	const [index, setIndex] = useState(1);
+
+	const [city, setcity] = useState(
+		officesCities ? officesCities[0].city : "Bogota"
+	);
+
+	const [sede, setSede] = useState(
+		officesCities ? officesCities[0].name : "Sede Uno"
+	);
+
+	const [dayOfTheWeek, setDayOfTheWeek] = useState<string[]>([]);
+
+	useEffect(() => {
+		console.log(dayOfTheWeek);
+	});
+	const sedesBycities = trpc.office.getSedesByCiudad.useQuery({ city: city });
+
+	const citiesSelectors = officesCities?.map((cities) => {
+		return (
+			<option
+				key={cities.id + "1"}
+				value={cities.city}
+			>
+				{" "}
+				{cities.city}
+			</option>
+		);
+	});
+
+	const sedesBycitiesSelector = sedesBycities.data?.map((sedes) => {
+		return (
+			<option
+				key={sedes.id + "1"}
+				value={sedes.name}
+			>
+				{" "}
+				{sedes.name}
+			</option>
+		);
+	});
+
 	if (index == 1) {
 		return (
 			<div className={styles.MainContainer}>
@@ -33,14 +99,22 @@ const doctorSetUp = () => {
 						<form>
 							<div>
 								<label>Ciudad</label>
-								<input></input>
+								<select onChange={(e) => setcity(e.currentTarget.value)}>
+									{citiesSelectors}
+								</select>
 							</div>
 							<div>
 								<label>Sede</label>
-								<input></input>
+								<select
+									disabled={sedesBycitiesSelector ? false : true}
+									onChange={(e) => {
+										setSede(e.currentTarget.value);
+									}}
+								>
+									{sedesBycitiesSelector}
+								</select>
 							</div>
 							<button
-								type='submit'
 								onClick={(e) => {
 									e.preventDefault();
 									setIndex(2);
@@ -61,7 +135,13 @@ const doctorSetUp = () => {
 					<div className={styles.InformationContainer}>
 						<div className={styles.StatusContainer}>
 							<span>1</span>
-							<p> Ubicación y lugar de trabajo</p>
+							<p
+								onClick={() => setIndex(1)}
+								style={{ cursor: "pointer" }}
+							>
+								{" "}
+								Ubicación y lugar de trabajo
+							</p>
 							<p> {">"} </p>
 							<span className={index == 1 ? styles.Selected : undefined}>
 								2
@@ -81,19 +161,32 @@ const doctorSetUp = () => {
 						</div>
 
 						<form>
-							<div>
+							<div className={styles.CheckboxContainer}>
 								<label>Dias de atención</label>
-								<input></input>
+								<DayCheckBox text='L' />
+								<DayCheckBox text='M' />
+								<DayCheckBox text='I' />
+								<DayCheckBox text='J' />
+								<DayCheckBox text='V' />
+								<DayCheckBox text='S' />
+								<DayCheckBox text='D' />
 							</div>
 							<div>
 								<label>Hora de inicio</label>
-								<input></input>
+								<input
+									type='time'
+									min='06:00'
+									required
+								/>
 							</div>
 							<div>
 								<label>Hora de finalización</label>
-								<input></input>
+								<input
+									type='time'
+									required
+								/>
 							</div>
-							<button>Finalizar</button>
+							<button type='submit'>Finalizar</button>
 						</form>
 					</div>
 				</section>

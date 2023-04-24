@@ -27,3 +27,8 @@ a {
 .MainContainer {
 	min-height: 100vh;
 }
+p,
+div,
+span {
+	cursor: default;
+}

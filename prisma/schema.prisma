@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["jsonProtocol"]
 }
 
@@ -25,7 +25,7 @@ model User {
 
 model Doctor {
   id           String        @id @default(cuid())
-  dayOfTheWeek DateTime
+  dayOfTheWeek String
   startTime    DateTime
   endTime      DateTime
   isAvailable  Boolean       @default(true) @db.TinyInt()

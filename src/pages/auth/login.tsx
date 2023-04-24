@@ -9,7 +9,6 @@ import { signIn } from "next-auth/react";
 import { getServerAuthSession } from "@/server/auth";
 
 import styles from "@styles/auth/login.module.css";
-import { TypeOf } from "zod";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const ctx = { req: context.req, res: context.res };
