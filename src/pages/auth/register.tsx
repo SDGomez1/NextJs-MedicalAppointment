@@ -155,7 +155,7 @@ const register = (): JSX.Element => {
 						required
 					/>
 
-					<button type='submit'>Registrate</button>
+					<button type='submit'>{createUser.isLoading ? "Cargando..." : "Registrate"}</button>
 					<p className={styles.GetLogIn}>
 						Ya tienes una cuenta?{" "}
 						<Link href={"/auth/login"}> Inicia sesión </Link>

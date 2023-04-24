@@ -9,7 +9,6 @@ import { signIn } from "next-auth/react";
 import { getServerAuthSession } from "@/server/auth";
 
 import styles from "@styles/auth/login.module.css";
-import { TypeOf } from "zod";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const ctx = { req: context.req, res: context.res };
@@ -33,19 +32,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const login = ({
 	queryParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element => {
+
+	const [isLoading, setIsLoading] = useState(false)
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
+			setIsLoading(true)
 			await signIn("credentials", {
 				redirect: true,
 				username: email,
 				password: password,
 				callbackUrl: "/",
 			});
+			setIsLoading(false)
 		} catch (e) {
 			alert("Ha ocurrido un error");
+			setIsLoading(false)
 		}
 	};
 
@@ -75,7 +79,7 @@ const login = ({
 				<p className={styles.ErrorMessage}>
 					{queryParams.query.error ? "Correo o contraseña invalidos" : ""}{" "}
 				</p>
-				<button type='submit'>Iniciar sesión</button>
+				<button type='submit'>{isLoading ?"Cargando..." :"Iniciar sesión"}</button>
 				<p>
 					No Tienes una cuenta?{" "}
 					<Link href={"/auth/register"}>Crea una Aquí</Link>
