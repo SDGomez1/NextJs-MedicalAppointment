@@ -17,7 +17,13 @@ const Footer = () => {
 				<p className={styles.LlamaText}>
 					Creadores de Next Js y llamas enfermas
 				</p>
-				<a className={styles.Text}>GitHub</a>
+				<a
+					className={styles.Text}
+					href='https://github.com/SDGomez1/NextJs-MedicalAppointment'
+					target='_blank'
+				>
+					GitHub
+				</a>
 			</div>
 		</footer>
 	);
