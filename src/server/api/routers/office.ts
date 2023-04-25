@@ -36,7 +36,9 @@ export const officeRouter = router({
 			return ctx.prisma.office.findUnique({
 				where: {
 					name: input.sede,
+					
 				},
 			});
 		}),
+	
 });
